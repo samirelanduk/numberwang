@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
  name="numberwang",
- version="0.0.0",
+ version="0.1.0",
  description="A pure-Python mathematical utilities library.",
  url="https://github.com/samirelanduk/numberwang",
  author="Sam Ireland",
