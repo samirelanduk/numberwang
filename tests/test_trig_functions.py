@@ -32,3 +32,14 @@ class SineLawTests(TestCase):
         with self.assertRaises(TypeError):
             sine_law(angle1=40, side1=30, side2="40")
         sine_law(angle1=40, side1=30, side2=40.5)
+
+
+    def test_three_arguments_must_be_supplied(self):
+        with self.assertRaises(TypeError):
+            sine_law()
+        with self.assertRaises(TypeError):
+            sine_law(angle1=100)
+        with self.assertRaises(TypeError):
+            sine_law(angle1=100, angle2=90)
+        with self.assertRaises(TypeError):
+            sine_law(angle1=100, angle2=90, side1=20, side2=100)
