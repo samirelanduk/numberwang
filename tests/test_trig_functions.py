@@ -9,11 +9,21 @@ class SineLawTests(TestCase):
          3.86,
          delta=0.005
         )
+        self.assertAlmostEqual(
+         sine_law(side2=2, angle2=30, angle1=105),
+         3.86,
+         delta=0.005
+        )
 
 
     def test_can_get_angle_given_other_angle_and_two_sides(self):
         self.assertAlmostEqual(
          sine_law(angle1=40, side1=30, side2=40),
+         58.99,
+         delta=0.005
+        )
+        self.assertAlmostEqual(
+         sine_law(angle2=40, side2=30, side1=40),
          58.99,
          delta=0.005
         )
