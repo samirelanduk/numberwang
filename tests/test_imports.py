@@ -8,6 +8,11 @@ class TrigObjectsTests(TestCase):
         self.assertIs(sine_law, numberwang.sine_law)
 
 
+    def test_cosine_law_imported(self):
+        from numberwang.trig import cosine_law
+        self.assertIs(cosine_law, numberwang.cosine_law)
+
+
 
 class ChecksObjectsTests(TestCase):
 
