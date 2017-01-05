@@ -72,3 +72,18 @@ class CosineLawTests(TestCase):
          18.2,
          delta=0.05
         )
+
+
+    def test_all_arguments_must_be_numeric(self):
+        with self.assertRaises(TypeError):
+            cosine_law(side1="12", side2=9, angle=87)
+        cosine_law(side1=12.5, side2=9, angle=87)
+        with self.assertRaises(TypeError):
+            cosine_law(side1=12, side2="9", angle=87)
+        cosine_law(side1=12, side2=9.5, angle=87)
+        with self.assertRaises(TypeError):
+            cosine_law(side1=12, side2=9, angle="87")
+        cosine_law(side1=12, side2=9, angle=87.5)
+        with self.assertRaises(TypeError):
+            cosine_law(side1=60, side2=50, side3="20")
+        cosine_law(side1=60, side2=50, side3=20.5)

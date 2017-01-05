@@ -24,6 +24,15 @@ def sine_law(side1=None, angle1=None, side2=None, angle2=None):
 
 
 def cosine_law(side1=None, side2=None, side3=None, angle=None):
+    if side1 is not None and not is_numeric(side1):
+        raise TypeError("side1 must be a number, not '%s'" % str(side1))
+    if side2 is not None and not is_numeric(side2):
+        raise TypeError("side2 must be a number, not '%s'" % str(side2))
+    if side3 is not None and not is_numeric(side3):
+        raise TypeError("side3 must be a number, not '%s'" % str(side3))
+    if angle is not None and not is_numeric(angle):
+        raise TypeError("angle must be a number, not '%s'" % str(angle))
+
     if side3 is None:
         return sqrt(
          ((side1 ** 2) + (side2 ** 2)) - (2 * side1 * side2 * cos(radians(angle)))
