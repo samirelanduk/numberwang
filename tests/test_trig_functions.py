@@ -92,3 +92,8 @@ class CosineLawTests(TestCase):
     def test_cannot_supply_both_angle_and_side3(self):
         with self.assertRaises(TypeError):
             cosine_law(side1=60, side2=50, side3=20, angle=100)
+
+
+    def test_need_to_supply_angle_or_side3(self):
+        with self.assertRaises(TypeError):
+            cosine_law(side1=60, side2=50)

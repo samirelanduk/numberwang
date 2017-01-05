@@ -34,6 +34,8 @@ def cosine_law(side1, side2, side3=None, angle=None):
         raise TypeError("angle must be a number, not '%s'" % str(angle))
     if side3 is not None and angle is not None:
         raise TypeError("side3 and angle both supplied")
+    if side3 is None and angle is None:
+        raise TypeError("You must supply either an angle or a side3")
 
     if side3 is None:
         return sqrt(
