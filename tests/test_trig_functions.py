@@ -53,3 +53,22 @@ class SineLawTests(TestCase):
             sine_law(angle1=100, angle2=90)
         with self.assertRaises(TypeError):
             sine_law(angle1=100, angle2=90, side1=20, side2=100)
+
+
+
+class CosineLawTests(TestCase):
+
+    def test_can_get_side_from_other_two_sides_and_their_angle(self):
+        self.assertAlmostEqual(
+         cosine_law(side1=12, side2=9, angle=87),
+         14.6,
+         delta=0.05
+        )
+
+
+    def test_can_get_angle_from_three_sides(self):
+        self.assertAlmostEqual(
+         cosine_law(side1=60, side2=50, side3=20),
+         18.2,
+         delta=0.05
+        )
