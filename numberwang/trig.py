@@ -1,4 +1,4 @@
-from math import radians, degrees, sin, asin
+from math import radians, degrees, sin, asin, cos, sqrt
 from .checks import is_numeric
 
 def sine_law(side1=None, angle1=None, side2=None, angle2=None):
@@ -21,3 +21,8 @@ def sine_law(side1=None, angle1=None, side2=None, angle2=None):
         return degrees(asin((side1 * sin(radians(angle2))) / side2))
     elif angle2 is None:
         return degrees(asin((side2 * sin(radians(angle1))) / side1))
+
+
+def cosine_law(side1=None, side2=None, side3=None, angle=None):
+    if side3 is None:
+        return sqrt(((side1 ** 2) + (side2 ** 2)) - (2 * side1 * side2 * cos(radians(angle))))
