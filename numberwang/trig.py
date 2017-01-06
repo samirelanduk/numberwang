@@ -1,7 +1,7 @@
 from math import radians, degrees, sin, asin, cos, acos, sqrt
 from .checks import is_numeric
 
-def sine_law(side1=None, angle1=None, side2=None, angle2=None):
+def sine_law(side1=None, angle1=None, side2=None, angle2=None, obtuse=False):
     if side1 is not None and not is_numeric(side1):
         raise TypeError("side1 must be a number, not '%s'" % str(side1))
     if side2 is not None and not is_numeric(side2):
@@ -13,14 +13,19 @@ def sine_law(side1=None, angle1=None, side2=None, angle2=None):
     if [side1, angle1, side2, angle2].count(None) != 1:
         raise TypeError("You must supply precisely three arguments to sine_law()")
 
+    angle = None
     if side1 is None:
         return (side2 * sin(radians(angle1))) / sin(radians(angle2))
     elif side2 is None:
         return (side1 * sin(radians(angle2))) / sin(radians(angle1))
     elif angle1 is None:
-        return degrees(asin((side1 * sin(radians(angle2))) / side2))
+        angle = degrees(asin((side1 * sin(radians(angle2))) / side2))
     elif angle2 is None:
-        return degrees(asin((side2 * sin(radians(angle1))) / side1))
+        angle = degrees(asin((side2 * sin(radians(angle1))) / side1))
+    if (obtuse and angle < 90) or (not obtuse and angle > 90):
+        return 180 - angle
+    else:
+        return angle
 
 
 def cosine_law(side1, side2, side3=None, angle=None):

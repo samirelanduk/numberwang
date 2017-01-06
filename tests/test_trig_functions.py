@@ -29,6 +29,19 @@ class SineLawTests(TestCase):
         )
 
 
+    def test_can_specify_missing_angle_is_obtuse(self):
+        self.assertAlmostEqual(
+         sine_law(angle1=33, side1=6, side2=10),
+         65.2,
+         delta=0.05
+        )
+        self.assertAlmostEqual(
+         sine_law(angle1=33, side1=6, side2=10, obtuse=True),
+         114.8,
+         delta=0.05
+        )
+
+
     def test_all_arguments_must_be_numeric(self):
         with self.assertRaises(TypeError):
             sine_law(side1="2", angle1=30, angle2=105)
