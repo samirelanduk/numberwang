@@ -1,5 +1,5 @@
 from unittest import TestCase
-from numberwang.checks import is_numeric
+from numerus.checks import is_numeric
 
 class IsNumericTests(TestCase):
 

@@ -1,10 +1,10 @@
 from setuptools import setup
 
 setup(
- name="numberwang",
+ name="numerus",
  version="0.1.0",
  description="A pure-Python mathematical utilities library.",
- url="https://github.com/samirelanduk/numberwang",
+ url="https://github.com/samirelanduk/numerus",
  author="Sam Ireland",
  author_email="mail@samireland.com",
  license="MIT",

@@ -1,21 +1,21 @@
 from unittest import TestCase
-import numberwang
+import numerus
 
 class TrigObjectsTests(TestCase):
 
     def test_sine_law_imported(self):
-        from numberwang.geometry import sine_law
-        self.assertIs(sine_law, numberwang.sine_law)
+        from numerus.geometry import sine_law
+        self.assertIs(sine_law, numerus.sine_law)
 
 
     def test_cosine_law_imported(self):
-        from numberwang.geometry import cosine_law
-        self.assertIs(cosine_law, numberwang.cosine_law)
+        from numerus.geometry import cosine_law
+        self.assertIs(cosine_law, numerus.cosine_law)
 
 
 
 class ChecksObjectsTests(TestCase):
 
     def test_is_numeric_imported(self):
-        from numberwang.checks import is_numeric
-        self.assertIs(is_numeric, numberwang.is_numeric)
+        from numerus.checks import is_numeric
+        self.assertIs(is_numeric, numerus.is_numeric)
