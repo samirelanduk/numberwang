@@ -23,7 +23,7 @@ that your system uses ``pip`` for the Python 2 version - if so, try:
 Requirements
 ~~~~~~~~~~~~
 
-numerus currently has no dependencies - neither Python nor compiled ones.
+numerus currently has no dependencies - compiled or otherwise.
 
 Overview
 --------
