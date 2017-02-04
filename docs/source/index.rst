@@ -12,3 +12,4 @@ Table of Contents
 .. toctree ::
 
   installing
+  overview
