@@ -1,7 +1,33 @@
+"""Contains tools for dealing with trigonometry and shapes."""
+
 from math import radians, degrees, sin, asin, cos, acos, sqrt
 from .checks import is_numeric
 
 def sine_law(side1=None, angle1=None, side2=None, angle2=None, obtuse=False):
+    """The sine law states concerns the fixed ratio between each angle and its
+    opposing side, and is given by:
+
+    .. math::
+        \\frac{\\sin A}{a}=\\frac{\sin B}{b}=\\frac{\sin C}{c}
+
+    It is particularly useful for determining either an unknown side or an
+    unknown angle in a triangle, providing the opposite element is known and one
+    other angle-side pair.
+
+    You must provide three arguments - if you give two angles and a side, a side
+    length will be returned, and if you give two sides and an angle, an angle
+    will be returned.
+
+    :param Number side1: A triangle side length.
+    :param Number angle1: A triangle angle in degrees.
+    :param Number side2: A triangle side length.
+    :param Number angle2: A triangle angle in degrees.
+    :param bool obtuse: This is relevant if you are trying to determine an\
+    angle - the sine law will return an angle less than 90° unless you set this\
+    to ``True``. Look up "sine law ambiguous case" for more information.
+    :raises TypeError: if you supply all four arguments instead of just three.
+    :rtype: ``float``"""
+
     if side1 is not None and not is_numeric(side1):
         raise TypeError("side1 must be a number, not '%s'" % str(side1))
     if side2 is not None and not is_numeric(side2):
