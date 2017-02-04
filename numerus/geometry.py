@@ -8,7 +8,7 @@ def sine_law(side1=None, angle1=None, side2=None, angle2=None, obtuse=False):
     opposing side, and is given by:
 
     .. math::
-        \\frac{\\sin A}{a}=\\frac{\sin B}{b}=\\frac{\sin C}{c}
+        \\frac{\\sin A}{a}=\\frac{\\sin B}{b}=\\frac{\\sin C}{c}
 
     It is particularly useful for determining either an unknown side or an
     unknown angle in a triangle, providing the opposite element is known and one
@@ -55,6 +55,21 @@ def sine_law(side1=None, angle1=None, side2=None, angle2=None, obtuse=False):
 
 
 def cosine_law(side1, side2, side3=None, angle=None):
+    """The cosine law is as follows:
+
+    .. math::
+        c^2 = a^2 + b^2 + 2ab {\\cos C}
+
+    It is useful in working out an angle or a side, provided you know the
+    opposite element and two other sides.
+
+    :param Number side1: A triangle side length.
+    :param Number side2: A trinagle side length.
+    :param Number side3: The triangle side length of interest.
+    :param Number angle: The angle of interest.
+    :raises TypeError: if you supply all four arguments instead of just three.
+    :rtype: ``float``"""
+
     if not is_numeric(side1):
         raise TypeError("side1 must be a number, not '%s'" % str(side1))
     if not is_numeric(side2):

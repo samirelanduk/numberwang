@@ -154,3 +154,6 @@ texinfo_documents = [
      author, 'numerus', 'One line description of project.',
      'Miscellaneous'),
 ]
+
+autodoc_member_order = 'bysource'
+autodoc_docstring_signature = True
