@@ -19,3 +19,26 @@ class ChecksObjectsTests(TestCase):
     def test_is_numeric_imported(self):
         from numerus.checks import is_numeric
         self.assertIs(is_numeric, numerus.is_numeric)
+
+
+    def test_are_numeric_imported(self):
+        from numerus.checks import are_numeric
+        self.assertIs(are_numeric, numerus.are_numeric)
+
+
+
+class StatObjectsTests(TestCase):
+
+    def test_mean_imported(self):
+        from numerus.stat import mean
+        self.assertIs(mean, numerus.mean)
+
+
+    def test_median_imported(self):
+        from numerus.stat import median
+        self.assertIs(median, numerus.median)
+
+
+    def test_mode_imported(self):
+        from numerus.stat import mode
+        self.assertIs(mode, numerus.mode)
