@@ -19,3 +19,16 @@ def is_numeric(number):
         return True
     else:
         return False
+
+
+def are_numeric(*values):
+    """Checks if all the arguments it receives are numeric (according to
+    :py:func:`is_numeric`).
+
+    :param \*values: The objects to check.
+    :rtype: ``bool``"""
+    
+    for value in values:
+        if not is_numeric(value):
+            return False
+    return True

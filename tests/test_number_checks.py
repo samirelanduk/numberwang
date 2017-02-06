@@ -1,5 +1,5 @@
 from unittest import TestCase
-from numerus.checks import is_numeric
+from numerus.checks import is_numeric, are_numeric
 
 class IsNumericTests(TestCase):
 
@@ -20,3 +20,14 @@ class IsNumericTests(TestCase):
         self.assertFalse(is_numeric(None))
         self.assertFalse(is_numeric(False))
         self.assertFalse(is_numeric(True))
+
+
+
+class AreNumericTests(TestCase):
+
+    def test_returns_true_when_all_numeric(self):
+        self.assertTrue(are_numeric(-1, -0.5, 0, 0.5, 1))
+
+
+    def test_returns_false_when_one_item_is_non_numeric(self):
+        self.assertFalse(are_numeric(-1, -0.5, 0, 0.5, 1, True))
