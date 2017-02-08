@@ -18,6 +18,13 @@ class MatrixCreationTests(TestCase):
             Matrix([1, 2, 3], "456")
 
 
+    def test_matrix_cannot_be_empty(self):
+        with self.assertRaises(TypeError):
+            Matrix()
+        with self.assertRaises(TypeError):
+            Matrix([], [])
+
+
     def test_sequences_must_be_equal_in_length(self):
         with self.assertRaises(ValueError):
             Matrix([1, 2, 3], [4, 5])

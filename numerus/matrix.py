@@ -1,6 +1,8 @@
 class Matrix:
 
     def __init__(self, *rows):
+        if not rows:
+            raise TypeError("Matrix needs at least one row")
         clean_rows = []
         row_length = -1
         for row in rows:
@@ -10,4 +12,6 @@ class Matrix:
                 raise ValueError("All Matrix rows must be of equal length")
             row_length = len(row)
             clean_rows.append(tuple(row))
+        if row_length == 0:
+            raise TypeError("Matrix rows cannot be empty")
         self._rows = tuple(clean_rows)
