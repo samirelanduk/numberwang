@@ -28,3 +28,8 @@ class MatrixCreationTests(TestCase):
     def test_sequences_must_be_equal_in_length(self):
         with self.assertRaises(ValueError):
             Matrix([1, 2, 3], [4, 5])
+
+
+    def test_matrix_repr(self):
+        matrix = Matrix((1, 2, 3), (4, 5, 6))
+        self.assertEqual(str(matrix), "<Matrix (2×3)>")

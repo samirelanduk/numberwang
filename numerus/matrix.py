@@ -15,3 +15,7 @@ class Matrix:
         if row_length == 0:
             raise TypeError("Matrix rows cannot be empty")
         self._rows = tuple(clean_rows)
+
+
+    def __repr__(self):
+        return "<Matrix (%i×%i)>" % (len(self._rows), len(self._rows[0]))
