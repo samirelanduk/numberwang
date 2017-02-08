@@ -16,3 +16,8 @@ class MatrixCreationTests(TestCase):
     def test_matrix_needs_sequences(self):
         with self.assertRaises(TypeError):
             Matrix([1, 2, 3], "456")
+
+
+    def test_sequences_must_be_equal_in_length(self):
+        with self.assertRaises(ValueError):
+            Matrix([1, 2, 3], [4, 5])
