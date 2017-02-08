@@ -33,3 +33,11 @@ class MatrixCreationTests(TestCase):
     def test_matrix_repr(self):
         matrix = Matrix((1, 2, 3), (4, 5, 6))
         self.assertEqual(str(matrix), "<Matrix (2×3)>")
+
+
+
+class MatrixRowsAndColumnsTests(TestCase):
+
+    def test_can_get_rows(self):
+        matrix = Matrix((1, 2, 3), (4, 5, 6))
+        self.assertEqual(matrix.rows(), ((1, 2, 3), (4, 5, 6)))
