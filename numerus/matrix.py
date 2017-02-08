@@ -23,3 +23,9 @@ class Matrix:
 
     def rows(self):
         return self._rows
+
+
+    def columns(self):
+        return tuple([tuple(
+         [row[n] for row in self._rows]
+        ) for n in range(len(self._rows[0]))])

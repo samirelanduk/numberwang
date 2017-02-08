@@ -41,3 +41,8 @@ class MatrixRowsAndColumnsTests(TestCase):
     def test_can_get_rows(self):
         matrix = Matrix((1, 2, 3), (4, 5, 6))
         self.assertEqual(matrix.rows(), ((1, 2, 3), (4, 5, 6)))
+
+
+    def test_can_get_columns(self):
+        matrix = Matrix((1, 2, 3), (4, 5, 6))
+        self.assertEqual(matrix.columns(), ((1, 4), (2, 5), (3, 6)))
