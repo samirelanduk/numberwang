@@ -29,3 +29,12 @@ class Matrix:
         return tuple([tuple(
          [row[n] for row in self._rows]
         ) for n in range(len(self._rows[0]))])
+
+
+    def size(self):
+        return (len(self.rows()), len(self.columns()))
+
+
+
+def can_add(matrix1, matrix2):
+    return matrix1.size() == matrix2.size()
