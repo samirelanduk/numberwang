@@ -1,3 +1,5 @@
+from .exceptions import MatrixError
+
 class Matrix:
 
     def __init__(self, *rows):
@@ -19,6 +21,17 @@ class Matrix:
 
     def __repr__(self):
         return "<Matrix (%i×%i)>" % (len(self._rows), len(self._rows[0]))
+
+
+    def __add__(self, other):
+        if not can_add(self, other):
+            raise MatrixError("Cannot add %s and %s." % (str(self), str(other)))
+        new_rows = []
+        for rindex, row in enumerate(self._rows):
+            other_row = other._rows[rindex]
+            new_row = [val + other_row[vindex] for vindex, val in enumerate(row)]
+            new_rows.append(new_row)
+        return Matrix(*new_rows)
 
 
     def rows(self):

@@ -1,5 +1,7 @@
 from unittest import TestCase
+from unittest.mock import patch
 from numerus.matrix import Matrix, can_add
+from numerus.exceptions import MatrixError
 
 class MatrixCreationTests(TestCase):
 
@@ -62,3 +64,19 @@ class MatrixAdditionTests(TestCase):
         self.assertTrue(can_add(matrix1, matrix2))
         matrix2 = Matrix((1, 2, 3, 3.5), (4, 5, 6, 6.5))
         self.assertFalse(can_add(matrix1, matrix2))
+
+
+    def test_can_add_matrices(self):
+        matrix1 = Matrix((1, 2, 3), (4, 5, 6))
+        matrix2 = Matrix((1, 2, 3), (4, 5, 6))
+        matrix3 = matrix1 + matrix2
+        self.assertEqual(matrix3.rows(), ((2, 4, 6), (8, 10, 12)))
+
+
+    @patch("numerus.matrix.can_add")
+    def test_cannot_add_if_function_says_no(self, mock_check):
+        mock_check.return_value = False
+        matrix1 = Matrix((1, 2, 3), (4, 5, 6))
+        matrix2 = Matrix((1, 2, 3), (4, 5, 6))
+        with self.assertRaises(MatrixError):
+            matrix1 + matrix2
