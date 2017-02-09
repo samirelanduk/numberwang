@@ -34,6 +34,19 @@ class Matrix:
         return Matrix(*new_rows)
 
 
+    def __sub__(self, other):
+        if not can_add(self, other):
+            raise MatrixError(
+             "Cannot subtract %s from %s." % (str(other), str(self))
+            )
+        new_rows = []
+        for rindex, row in enumerate(self._rows):
+            other_row = other._rows[rindex]
+            new_row = [val - other_row[vindex] for vindex, val in enumerate(row)]
+            new_rows.append(new_row)
+        return Matrix(*new_rows)
+
+
     def rows(self):
         return self._rows
 

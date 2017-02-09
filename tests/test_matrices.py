@@ -80,3 +80,19 @@ class MatrixAdditionTests(TestCase):
         matrix2 = Matrix((1, 2, 3), (4, 5, 6))
         with self.assertRaises(MatrixError):
             matrix1 + matrix2
+
+
+    def test_can_subtract_matrices(self):
+        matrix1 = Matrix((-1, 2, 0), (0, 3, 6))
+        matrix2 = Matrix((0, -4, 3), (9, -4, -3))
+        matrix3 = matrix1 - matrix2
+        self.assertEqual(matrix3.rows(), ((-1, 6, -3), (-9, 7, 9)))
+
+
+    @patch("numerus.matrix.can_add")
+    def test_cannot_add_if_function_says_no(self, mock_check):
+        mock_check.return_value = False
+        matrix1 = Matrix((-1, 2, 0), (0, 3, 6))
+        matrix2 = Matrix((0, -4, 3), (9, -4, -3))
+        with self.assertRaises(MatrixError):
+            matrix1 - matrix2
