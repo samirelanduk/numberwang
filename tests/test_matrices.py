@@ -142,3 +142,9 @@ class MatrixMultiplicationTests(TestCase):
         matrix2 = Matrix((7, 8), (9, 10), (11, 12))
         with self.assertRaises(MatrixError):
             matrix1 * matrix2
+
+
+    def test_matrix_multiplication_is_not_commutative(self):
+        matrix1 = Matrix((1, 2), (4, 5))
+        matrix2 = Matrix((100, -2), (4.4, 50))
+        self.assertNotEqual(matrix1 * matrix2, matrix2 * matrix1)
