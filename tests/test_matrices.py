@@ -110,3 +110,19 @@ class MatrixMultiplicationTests(TestCase):
         matrix1.size.return_value = (3, 4)
         matrix2.size.return_value = (2, 3)
         self.assertFalse(can_multiply(matrix1, matrix2))
+
+
+    def test_can_multiply_matrices(self):
+        matrix1 = Matrix((1, 2, 3), (4, 5, 6))
+        matrix2 = Matrix((7, 8), (9, 10), (11, 12))
+        matrix3 = matrix1 * matrix2
+        self.assertEqual(matrix3.rows(), ((58, 64), (139, 154)))
+
+
+    @patch("numerus.matrix.can_multiply")
+    def test_cannot_multiply_if_function_says_no(self, mock_check):
+        mock_check.return_value = False
+        matrix1 = Matrix((1, 2, 3), (4, 5, 6))
+        matrix2 = Matrix((7, 8), (9, 10), (11, 12))
+        with self.assertRaises(MatrixError):
+            matrix1 * matrix2
