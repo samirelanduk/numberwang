@@ -1,6 +1,6 @@
 from unittest import TestCase
-from unittest.mock import patch
-from numerus.matrix import Matrix, can_add
+from unittest.mock import patch, Mock
+from numerus.matrix import Matrix, can_add, can_multiply
 from numerus.exceptions import MatrixError
 
 class MatrixCreationTests(TestCase):
@@ -96,3 +96,17 @@ class MatrixAdditionTests(TestCase):
         matrix2 = Matrix((0, -4, 3), (9, -4, -3))
         with self.assertRaises(MatrixError):
             matrix1 - matrix2
+
+
+
+class MatrixMultiplicationTests(TestCase):
+
+    def test_can_multiply_function(self):
+        matrix1 = Mock(Matrix)
+        matrix2 = Mock(Matrix)
+        matrix1.size.return_value = (4, 3)
+        matrix2.size.return_value = (3, 2)
+        self.assertTrue(can_multiply(matrix1, matrix2))
+        matrix1.size.return_value = (3, 4)
+        matrix2.size.return_value = (2, 3)
+        self.assertFalse(can_multiply(matrix1, matrix2))

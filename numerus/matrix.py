@@ -64,3 +64,7 @@ class Matrix:
 
 def can_add(matrix1, matrix2):
     return matrix1.size() == matrix2.size()
+
+
+def can_multiply(matrix1, matrix2):
+    return matrix1.size()[1] == matrix2.size()[0]
