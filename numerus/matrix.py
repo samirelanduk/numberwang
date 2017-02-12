@@ -85,6 +85,10 @@ class Matrix:
 
 
 
+def create_vertex(*values):
+    return Matrix(*[(value,) for value in values])
+
+
 def can_add(matrix1, matrix2):
     return matrix1.size() == matrix2.size()
 

@@ -1,6 +1,6 @@
 from unittest import TestCase
 from unittest.mock import patch, Mock
-from numerus.matrix import Matrix, can_add, can_multiply
+from numerus.matrix import Matrix, can_add, can_multiply, create_vertex
 from numerus.exceptions import MatrixError
 
 class MatrixCreationTests(TestCase):
@@ -148,3 +148,12 @@ class MatrixMultiplicationTests(TestCase):
         matrix1 = Matrix((1, 2), (4, 5))
         matrix2 = Matrix((100, -2), (4.4, 50))
         self.assertNotEqual(matrix1 * matrix2, matrix2 * matrix1)
+
+
+
+class VertexTests(TestCase):
+
+    def test_can_create_vertex(self):
+        vertex = create_vertex(1, 4, 5, 6)
+        self.assertIsInstance(vertex, Matrix)
+        self.assertEqual(vertex, Matrix([1], [4], [5], [6]))
