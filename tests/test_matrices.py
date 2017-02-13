@@ -150,6 +150,18 @@ class MatrixMultiplicationTests(TestCase):
         self.assertNotEqual(matrix1 * matrix2, matrix2 * matrix1)
 
 
+    def test_can_multiply_matrices_by_scalar(self):
+        matrix = Matrix((1, 2, 3), (4, 5, 6))
+        self.assertEqual(
+         matrix * 3,
+         Matrix((3, 6, 9), (12, 15, 18))
+        )
+        self.assertEqual(
+         3 * matrix,
+         Matrix((3, 6, 9), (12, 15, 18))
+        )
+
+
 
 class VertexTests(TestCase):
 
