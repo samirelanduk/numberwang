@@ -15,3 +15,12 @@ class TranslationTests(TransformationTest):
          translate(self.points, 3, -2, 8),
          ((4, -1, 8), (5, -1, 8), (6, -1, 8), (7, -1, 8), (8, -1, 8))
         )
+
+
+    def translation_directions_must_be_numeric(self):
+        with self.assertRaises(TypeError):
+            translate(self.points, "3", -2, 8)
+        with self.assertRaises(TypeError):
+            translate(self.points, 3, "-2", 8)
+        with self.assertRaises(TypeError):
+            translate(self.points, 3, -2, "8")
