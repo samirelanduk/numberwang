@@ -1,10 +1,20 @@
 from unittest import TestCase
-from numerus.geometry.transform import translate
+from numerus.geometry.transform import translate, rotate
 
 class TransformationTest(TestCase):
 
     def setUp(self):
-        self.points = [(1, 1, 0), (2, 1, 0), (3, 1, 0), (4, 1, 0), (5, 1, 0)]
+        self.points = [(1, 1, 1), (2, 1, 1), (3, 1, 1), (4, 1, 1), (5, 1, 1)]
+
+
+    def assertPointsAlmostEqual(self, points1, points2):
+        self.assertEqual(len(points1), len(points2))
+        for index, point1 in enumerate(points1):
+            point2 = points2[index]
+            self.assertEqual(len(point1), len(point2), 3)
+            self.assertAlmostEqual(point1[0], point2[0], delta=0.0005)
+            self.assertAlmostEqual(point1[1], point2[1], delta=0.0005)
+            self.assertAlmostEqual(point1[2], point2[2], delta=0.0005)
 
 
 
@@ -13,7 +23,7 @@ class TranslationTests(TransformationTest):
     def test_can_translate(self):
         self.assertEqual(
          translate(self.points, 3, -2, 8),
-         ((4, -1, 8), (5, -1, 8), (6, -1, 8), (7, -1, 8), (8, -1, 8))
+         ((4, -1, 9), (5, -1, 9), (6, -1, 9), (7, -1, 9), (8, -1, 9))
         )
 
 
@@ -24,3 +34,48 @@ class TranslationTests(TransformationTest):
             translate(self.points, 3, "-2", 8)
         with self.assertRaises(TypeError):
             translate(self.points, 3, -2, "8")
+
+
+
+class RotationTests(TransformationTest):
+
+    def test_can_rotate_around_x_axis_180(self):
+        self.assertPointsAlmostEqual(
+         rotate(self.points, "x", 180),
+         ((1, -1, -1), (2, -1, -1), (3, -1, -1), (4, -1, -1), (5, -1, -1))
+        )
+
+
+    def test_can_rotate_around_x_axis_90(self):
+        self.assertPointsAlmostEqual(
+         rotate(self.points, "x", 90),
+         ((1, -1, 1), (2, -1, 1), (3, -1, 1), (4, -1, 1), (5, -1, 1))
+        )
+
+
+    def test_can_rotate_around_y_axis_180(self):
+        self.assertPointsAlmostEqual(
+         rotate(self.points, "y", 180),
+         ((-1, 1, -1), (-2, 1, -1), (-3, 1, -1), (-4, 1, -1), (-5, 1, -1))
+        )
+
+
+    def test_can_rotate_around_y_axis_90(self):
+        self.assertPointsAlmostEqual(
+         rotate(self.points, "y", 90),
+         ((1, 1, -1), (1, 1, -2), (1, 1, -3), (1, 1, -4), (1, 1, -5))
+        )
+
+
+    def test_can_rotate_around_z_axis_180(self):
+        self.assertPointsAlmostEqual(
+         rotate(self.points, "z", 180),
+         ((-1, -1, 1), (-2, -1, 1), (-3, -1, 1), (-4, -1, 1), (-5, -1, 1))
+        )
+
+
+    def test_can_rotate_around_z_axis_90(self):
+        self.assertPointsAlmostEqual(
+         rotate(self.points, "z", 90),
+         ((-1, 1, 1), (-1, 2, 1), (-1, 3, 1), (-1, 4, 1), (-1, 5, 1))
+        )
