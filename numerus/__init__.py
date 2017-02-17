@@ -1,5 +1,6 @@
 from .geometry import sine_law, cosine_law
-from .stat import mean, mode, median
+from .stats import mean, mode, median
+from .matrices import Matrix, create_vertex
 from .checks import is_numeric, are_numeric
 
 __version__ = "0.2.0"

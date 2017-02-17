@@ -1,7 +1,7 @@
 """Tools for statistical analysis and measures of probability."""
 
 from collections import Counter
-from .checks import are_numeric
+from ..checks import are_numeric
 
 def mean(*values):
     """Returns the arithmetic mean of a set of values.

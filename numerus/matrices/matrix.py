@@ -1,4 +1,4 @@
-from .exceptions import MatrixError
+from ..exceptions import MatrixError
 
 class Matrix:
 

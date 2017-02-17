@@ -1,5 +1,5 @@
 from unittest import TestCase
-from numerus.stat import mean, median, mode
+from numerus.stats.functions import mean, median, mode
 
 class MeanTests(TestCase):
 

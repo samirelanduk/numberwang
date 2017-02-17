@@ -1,5 +1,5 @@
 from unittest import TestCase
-from numerus.geometry import sine_law, cosine_law
+from numerus.geometry.trig import sine_law, cosine_law
 
 class SineLawTests(TestCase):
 

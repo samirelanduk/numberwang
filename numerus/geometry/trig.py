@@ -1,7 +1,7 @@
 """Contains tools for dealing with trigonometry and shapes."""
 
 from math import radians, degrees, sin, asin, cos, acos, sqrt
-from .checks import is_numeric
+from ..checks import is_numeric
 
 def sine_law(side1=None, angle1=None, side2=None, angle2=None, obtuse=False):
     """The sine law states concerns the fixed ratio between each angle and its

@@ -1,7 +1,7 @@
 from unittest import TestCase
 import numerus
 
-class TrigObjectsTests(TestCase):
+class GeometryImportTests(TestCase):
 
     def test_sine_law_imported(self):
         from numerus.geometry import sine_law
@@ -14,7 +14,38 @@ class TrigObjectsTests(TestCase):
 
 
 
-class ChecksObjectsTests(TestCase):
+class MatrixImportTests(TestCase):
+
+    def test_matrix_imported(self):
+        from numerus.matrices import Matrix
+        self.assertIs(Matrix, numerus.Matrix)
+
+
+    def test_vertex_imported(self):
+        from numerus.matrices import create_vertex
+        self.assertIs(create_vertex, numerus.create_vertex)
+
+
+
+class StatsImportTests(TestCase):
+
+    def test_mean_imported(self):
+        from numerus.stats import mean
+        self.assertIs(mean, numerus.mean)
+
+
+    def test_median_imported(self):
+        from numerus.stats import median
+        self.assertIs(median, numerus.median)
+
+
+    def test_mode_imported(self):
+        from numerus.stats import mode
+        self.assertIs(mode, numerus.mode)
+
+
+
+class ChecksImportTests(TestCase):
 
     def test_is_numeric_imported(self):
         from numerus.checks import is_numeric
@@ -24,21 +55,3 @@ class ChecksObjectsTests(TestCase):
     def test_are_numeric_imported(self):
         from numerus.checks import are_numeric
         self.assertIs(are_numeric, numerus.are_numeric)
-
-
-
-class StatObjectsTests(TestCase):
-
-    def test_mean_imported(self):
-        from numerus.stat import mean
-        self.assertIs(mean, numerus.mean)
-
-
-    def test_median_imported(self):
-        from numerus.stat import median
-        self.assertIs(median, numerus.median)
-
-
-    def test_mode_imported(self):
-        from numerus.stat import mode
-        self.assertIs(mode, numerus.mode)

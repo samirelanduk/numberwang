@@ -1,6 +1,6 @@
 from unittest import TestCase
 from unittest.mock import patch, Mock
-from numerus.matrix import Matrix, can_add, can_multiply, create_vertex
+from numerus.matrices.matrix import Matrix, can_add, can_multiply, create_vertex
 from numerus.exceptions import MatrixError
 
 class MatrixCreationTests(TestCase):
@@ -89,7 +89,7 @@ class MatrixAdditionTests(TestCase):
         self.assertEqual(matrix3.rows(), ((2, 4, 6), (8, 10, 12)))
 
 
-    @patch("numerus.matrix.can_add")
+    @patch("numerus.matrices.matrix.can_add")
     def test_cannot_add_if_function_says_no(self, mock_check):
         mock_check.return_value = False
         matrix1 = Matrix((1, 2, 3), (4, 5, 6))
@@ -105,7 +105,7 @@ class MatrixAdditionTests(TestCase):
         self.assertEqual(matrix3.rows(), ((-1, 6, -3), (-9, 7, 9)))
 
 
-    @patch("numerus.matrix.can_add")
+    @patch("numerus.matrices.matrix.can_add")
     def test_cannot_add_if_function_says_no(self, mock_check):
         mock_check.return_value = False
         matrix1 = Matrix((-1, 2, 0), (0, 3, 6))
@@ -135,7 +135,7 @@ class MatrixMultiplicationTests(TestCase):
         self.assertEqual(matrix3.rows(), ((58, 64), (139, 154)))
 
 
-    @patch("numerus.matrix.can_multiply")
+    @patch("numerus.matrices.matrix.can_multiply")
     def test_cannot_multiply_if_function_says_no(self, mock_check):
         mock_check.return_value = False
         matrix1 = Matrix((1, 2, 3), (4, 5, 6))
