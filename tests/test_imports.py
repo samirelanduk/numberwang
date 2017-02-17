@@ -13,6 +13,16 @@ class GeometryImportTests(TestCase):
         self.assertIs(cosine_law, numerus.cosine_law)
 
 
+    def test_translate_imported(self):
+        from numerus.geometry import translate
+        self.assertIs(translate, numerus.translate)
+
+
+    def test_rotate_imported(self):
+        from numerus.geometry import rotate
+        self.assertIs(rotate, numerus.rotate)
+
+
 
 class MatrixImportTests(TestCase):
 
