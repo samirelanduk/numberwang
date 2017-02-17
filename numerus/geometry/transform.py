@@ -1,5 +1,5 @@
 from math import radians, sin, cos
-from ..checks import are_numeric
+from ..checks import are_numeric, is_numeric
 from ..matrices.matrix import create_vertex, Matrix
 
 def translate(points, x, y, z):
@@ -11,6 +11,8 @@ def translate(points, x, y, z):
 
 
 def rotate(points, axis, angle):
+    if not is_numeric:
+        raise TypeError("angle must be numeric, not '%s'" % str(angle))
     angle = radians(angle)
     points = [create_vertex(*point) for point in points]
     matrix = None
@@ -32,5 +34,7 @@ def rotate(points, axis, angle):
          (sin(angle), cos(angle), 0),
          (0, 0, 1)
         )
+    else:
+        raise ValueError("axis can only be 'x', 'y' or 'z', not %s" % axis)
     new_points = [matrix * point for point in points]
     return tuple([point.columns()[0] for point in new_points])

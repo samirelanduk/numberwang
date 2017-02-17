@@ -79,3 +79,13 @@ class RotationTests(TransformationTest):
          rotate(self.points, "z", 90),
          ((-1, 1, 1), (-1, 2, 1), (-1, 3, 1), (-1, 4, 1), (-1, 5, 1))
         )
+
+
+    def test_axis_must_be_x_or_y_or_z(self):
+        with self.assertRaises(ValueError):
+            rotate(self.points, "a", 90)
+
+
+    def test_angle_must_be_numeric(self):
+        with self.assertRaises(TypeError):
+            rotate(self.points, "x", "90")
