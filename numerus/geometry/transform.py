@@ -1,8 +1,24 @@
+"""Contains functions for manipulating Cartesian coordinates."""
+
 from math import radians, sin, cos
 from ..checks import are_numeric, is_numeric
 from ..matrices.matrix import create_vertex, Matrix
 
 def translate(points, x, y, z):
+    """Takes a set of coordinates and translates them in three dimensional
+    space.
+
+    The points must be a list (or tuple, or any collection really) of
+    coordinates in the form ``(x, y, z)``.
+
+    An example would be ``translate([(1, 1, 1), (2, 2, 2)], 5, 5, 5)``.
+
+    :param points: A collection of (x, y, z) coordinates.
+    :param Number x: The distance to move the points in the x direction.
+    :param Number y: The distance to move the points in the y direction.
+    :param Number z: The distance to move the points in the z direction.
+    :returns: The translated coordinates."""
+
     if not are_numeric(x, y, z):
         raise TypeError("Translation parameters must be numeric, not '%s'" % (
          str((x, y, z))
@@ -11,6 +27,20 @@ def translate(points, x, y, z):
 
 
 def rotate(points, axis, angle):
+    """Takes a set of coordinates and rotates them around one of the axes by a
+    specified angle. The rotation performed is right-handed.
+
+    The points must be a list (or tuple, or any collection really) of
+    coordinates in the form ``(x, y, z)``.
+
+    An example would be ``rotate([(1, 1, 1), (2, 2, 2)], "x", 45)``.
+
+    :param points: A collection of (x, y, z) coordinates.
+    :param str axis: The axis to rotate around. Accepted values are `"x"`,\
+    `"y"` or `"z"`.
+    :param Number angle: The angle in degrees to rotate by.
+    :returns: The translated coordinates."""
+    
     if not is_numeric:
         raise TypeError("angle must be numeric, not '%s'" % str(angle))
     angle = radians(angle)

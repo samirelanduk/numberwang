@@ -1,4 +1,4 @@
-"""Contains tools for dealing with trigonometry and shapes."""
+"""Contains functions for using trigonometry equations."""
 
 from math import radians, degrees, sin, asin, cos, acos, sqrt
 from ..checks import is_numeric
