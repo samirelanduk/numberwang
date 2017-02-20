@@ -1,4 +1,4 @@
-"""Tools for statistical analysis and measures of probability."""
+"""Functions for statistical analysis and measures of probability."""
 
 from collections import Counter
 from ..checks import are_numeric

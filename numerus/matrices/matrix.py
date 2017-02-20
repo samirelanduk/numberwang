@@ -1,6 +1,15 @@
 from ..exceptions import MatrixError
 
 class Matrix:
+    """A class for representing matrices.
+
+    A Matrix is created by passing a list of rows. These rows must be of equal
+    length.
+
+    Matrices can be added using the ``+`` operator and (dot) multiplied using
+    the ``*`` operator. They also support scalar multiplication.
+
+    :param \* rows: A collection of lists or tuples."""
 
     def __init__(self, *rows):
         if not rows:
@@ -78,21 +87,37 @@ class Matrix:
 
 
     def rows(self):
+        """Returns the Matrix's rows.
+
+        :rtype: ``tuple``"""
+
         return self._rows
 
 
     def columns(self):
+        """Returns the Matrix's columns.
+
+        :rtype: ``tuple``"""
+
         return tuple([tuple(
          [row[n] for row in self._rows]
         ) for n in range(len(self._rows[0]))])
 
 
     def size(self):
+        """Returns the Matrix's size in (height, width) notation.
+
+        :rtype: ``tuple``"""
+
         return (len(self.rows()), len(self.columns()))
 
 
 
 def create_vertex(*values):
+    """Creates a Matrix with one column, made up of the provided values.
+
+    :param \*values: The vertex's values."""
+
     return Matrix(*[(value,) for value in values])
 
 
