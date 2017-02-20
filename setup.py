@@ -23,5 +23,6 @@ setup(
   "Programming Language :: Python :: 3.6",
  ],
  keywords="mathematics science",
+ packages=["numerus", "numerus.geometry", "numerus.matrices", "numerus.stats"],
  packages=["numerus"]
 )
