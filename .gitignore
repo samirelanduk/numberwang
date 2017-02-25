@@ -1,10 +1,11 @@
-*.pyc
 __pycache__
+*.pyc
 .DS_Store
+*.svg
+build
 _static
 _templates
-build
 dist
 *.egg-info
-*.svg
-*.html
+test.py
+*env
