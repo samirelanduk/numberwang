@@ -1,7 +1,9 @@
 class Vector:
 
     def __init__(self, *values):
-        self._values = tuple(values)
+        try:
+            self._values = tuple(values[0])
+        except: self._values = tuple(values)
 
 
     @property
