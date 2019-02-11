@@ -6,8 +6,24 @@ class Function:
 
     def __call__(self, arg):
         output = arg
-        for op in self.operations: output = op(output)
-        return output
+        terms = []
+        for op in self.operations:
+            try:
+                terms.append(Function(*op)(arg))
+            except:
+                output = op(output)
+        return sum(terms) + output
+
+
+
+class Operation:
+
+    def __init__(self, *args):
+        pass
+
+
+    def __call__(self, value):
+        pass
 
 
 
@@ -30,3 +46,14 @@ class Multiply:
 
     def __call__(self, value):
         return value * self.value
+
+
+
+class Power:
+
+    def __init__(self, value):
+        self.value = value
+
+
+    def __call__(self, value):
+        return value ** self.value
