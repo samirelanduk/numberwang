@@ -1,63 +1,38 @@
 class Function:
 
-    def __call__(self, arg):
-        return arg
-
-
-
-class Add:
-
-    def __init__(self, *operands):
-        self.operands = operands
-
-    def __call__(self, arg):
-        if len(self.operands) == 1:
-            return arg + self.operands[0]
-        else:
-            value = 0
-            for op in self.operands:
-                try:
-                    value += op(arg)
-                except:
-                    value += op
-            return value
-
-
-
-class Multiply:
+    func = lambda a, b: 0
 
     def __init__(self, *operands):
         self.operands = operands
 
 
     def __call__(self, arg):
-        if len(self.operands) == 1:
-            return arg * self.operands[0]
+        if len(self.operands) == 0:
+            return arg
+        elif len(self.operands) == 1:
+            return self.func(arg, self.operands[0])
         else:
-            value = 1
-            for op in self.operands:
-                try:
-                    value *= op(arg)
-                except:
-                    value *= op
+            value = self.operands[0]
+            value = value(arg) if isinstance(value, Function) else value
+            for op in self.operands[1:]:
+                op = op(arg) if isinstance(op, Function) else op
+                value = self.func(value, op)
             return value
 
 
 
-class Power:
+class Add(Function):
 
-    def __init__(self, *operands):
-        self.operands = operands
+    func = lambda s, a, b: a + b
 
 
-    def __call__(self, arg):
-        if len(self.operands) == 1:
-            return arg ** self.operands[0]
-        else:
-            value = 0
-            for op in self.operands:
-                try:
-                    value **= op(arg)
-                except:
-                    value **= op
-            return value
+
+class Multiply(Function):
+
+    func = lambda s, a, b: a * b
+
+
+
+class Power(Function):
+
+    func = lambda s, a, b: a ** b
