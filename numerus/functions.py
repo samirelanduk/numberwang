@@ -1,59 +1,63 @@
 class Function:
 
-    def __init__(self, *operations):
-        self.operations = operations
-
-
     def __call__(self, arg):
-        output = arg
-        terms = []
-        for op in self.operations:
-            try:
-                terms.append(Function(*op)(arg))
-            except:
-                output = op(output)
-        return sum(terms) + output
-
-
-
-class Operation:
-
-    def __init__(self, *args):
-        pass
-
-
-    def __call__(self, value):
-        pass
+        return arg
 
 
 
 class Add:
 
-    def __init__(self, value):
-        self.value = value
+    def __init__(self, *operands):
+        self.operands = operands
 
-
-    def __call__(self, value):
-        return value + self.value
+    def __call__(self, arg):
+        if len(self.operands) == 1:
+            return arg + self.operands[0]
+        else:
+            value = 0
+            for op in self.operands:
+                try:
+                    value += op(arg)
+                except:
+                    value += op
+            return value
 
 
 
 class Multiply:
 
-    def __init__(self, value):
-        self.value = value
+    def __init__(self, *operands):
+        self.operands = operands
 
 
-    def __call__(self, value):
-        return value * self.value
+    def __call__(self, arg):
+        if len(self.operands) == 1:
+            return arg * self.operands[0]
+        else:
+            value = 1
+            for op in self.operands:
+                try:
+                    value *= op(arg)
+                except:
+                    value *= op
+            return value
 
 
 
 class Power:
 
-    def __init__(self, value):
-        self.value = value
+    def __init__(self, *operands):
+        self.operands = operands
 
 
-    def __call__(self, value):
-        return value ** self.value
+    def __call__(self, arg):
+        if len(self.operands) == 1:
+            return arg ** self.operands[0]
+        else:
+            value = 0
+            for op in self.operands:
+                try:
+                    value **= op(arg)
+                except:
+                    value **= op
+            return value
