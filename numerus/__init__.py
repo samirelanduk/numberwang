@@ -1,5 +1,5 @@
 from .linalg import Vector
-from .functions import Function, Add, Multiply, Power
+from .functions import Function, Add, Multiply, Divide, Power
 from .sets import naturals, wholes, integers, rationals
 
 __version__ = "0.2.0"

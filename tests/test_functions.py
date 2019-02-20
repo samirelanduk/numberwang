@@ -45,3 +45,12 @@ class Test(TestCase):
          )
         )
         self.assertEqual(func(2), 20)
+
+        # f(x) = (x^3 + 1) / (x^2 - 7x - 10)
+        func = numerus.Divide(
+         numerus.Add(numerus.Power(3), 1),
+         numerus.Add(numerus.Power(2), numerus.Add(
+          numerus.Multiply(-7), -10
+         ))
+        )
+        self.assertEqual(func(2), 9/-20)

@@ -33,6 +33,12 @@ class Multiply(Function):
 
 
 
+class Divide(Function):
+
+    func = lambda s, a, b: a / b
+
+
+
 class Power(Function):
 
     func = lambda s, a, b: a ** b
