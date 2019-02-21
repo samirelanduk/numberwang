@@ -46,6 +46,10 @@ class Test(TestCase):
         )
         self.assertEqual(func(2), 20)
 
+        # f(x) = 1/x^2
+        func = numerus.Divide(1, numerus.Power(2))
+        self.assertEqual(func(2), 0.25)
+
         # f(x) = (x^3 + 1) / (x^2 - 7x - 10)
         func = numerus.Divide(
          numerus.Add(numerus.Power(3), 1),
@@ -54,3 +58,10 @@ class Test(TestCase):
          ))
         )
         self.assertEqual(func(2), 9/-20)
+
+        # f(x) = 2^x
+        func = numerus.Exponent(2)
+        self.assertEqual(func(2), 4)
+        self.assertEqual(func(3), 8)
+        self.assertEqual(func(4), 16)
+        self.assertEqual(func(5), 32)

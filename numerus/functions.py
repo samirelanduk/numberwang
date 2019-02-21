@@ -42,3 +42,9 @@ class Divide(Function):
 class Power(Function):
 
     func = lambda s, a, b: a ** b
+
+
+
+class Exponent(Function):
+
+    func = lambda s, a, b: b ** a
