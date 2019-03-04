@@ -10,8 +10,6 @@ class Vector:
         try:
             self._values = tuple(values[0])
         except: self._values = tuple(values)
-        self._space = VectorSpace(len(self._values))
-        self._space._vectors.add(self)
 
 
     def __repr__(self):
@@ -46,46 +44,3 @@ class Vector:
 
         values = [v * scalar for v in self._values]
         return Vector(*values)
-
-
-    @property
-    def space(self):
-        """The VectorSpace the vector inhabits.
-
-        :rtype: ``VectorSpace``"""
-
-        return self._space
-
-
-spacers = {}
-class VectorSpace:
-    """A space that vectors live in. It has a dimension.
-
-    :param int dimension: the number of dimensions in the space."""
-
-    def __new__(cls, dimension):
-        try:
-            return spacers[dimension]
-        except:
-            space = super(VectorSpace, cls).__new__(cls)
-            spacers[dimension] = space
-            space._vectors = set()
-            space._dimension = dimension
-            return space
-
-
-    @property
-    def dimension(self):
-        """The dimension number of the space.
-
-        :rtype: ``int``"""
-
-        return self._dimension
-
-
-    def contains(self, vector):
-        """Checks whether a vector is in a given space.
-
-        :rtype: ``bool``"""
-        
-        return vector in self._vectors

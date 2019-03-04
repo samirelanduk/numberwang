@@ -15,13 +15,3 @@ class Test(TestCase):
 
         vector4 = vector3.scale(0.5)
         self.assertEqual(vector4.values, (0.5, 6.5))
-
-        space = vector1.space
-        self.assertEqual(space.dimension, 2)
-        self.assertTrue(space.contains(vector1))
-        self.assertTrue(space.contains(vector2))
-        self.assertTrue(space.contains(vector3))
-        self.assertTrue(space.contains(vector4))
-
-        vector5 = numerus.Vector(2, -1, 4)
-        self.assertFalse(space.contains(vector5))
