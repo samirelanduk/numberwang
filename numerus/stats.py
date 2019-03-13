@@ -55,3 +55,44 @@ class Variable:
         next_count = most_common[1][1]
         if top_count == next_count: return None
         return most_common[0][0]
+
+
+    @property
+    def max(self):
+        return max(self._values)
+
+
+    @property
+    def min(self):
+        return min(self._values)
+
+
+    @property
+    def range(self):
+        return self.max - self.min
+
+
+    def deviation(self, value):
+        return value - self.mean
+
+
+    @property
+    def variance(self):
+        msd =  sum(self.deviation(val) ** 2 for val in self._values)
+        return msd / (len(self) - 1)
+
+
+    @property
+    def pop_variance(self):
+        msd =  sum(self.deviation(val) ** 2 for val in self._values)
+        return msd / len(self)
+
+
+    @property
+    def st_dev(self):
+        return self.variance ** 0.5
+
+
+    @property
+    def pop_st_dev(self):
+        return self.pop_variance ** 0.5

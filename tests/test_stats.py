@@ -20,3 +20,16 @@ class Tests(TestCase):
         self.assertEqual(stats.Variable(1, 1, 1, 1).mode, 1)
         self.assertEqual(heights.mode, None)
         self.assertEqual(stats.Variable().mode, None)
+
+        # Variation
+        self.assertEqual(heights.max, 187)
+        self.assertEqual(heights.min, 176)
+        self.assertEqual(heights.range, 11)
+        values = stats.Variable(600, 470, 170, 430, 300)
+        self.assertEqual(values.mean, 394)
+        self.assertEqual(values.deviation(400), 6)
+        self.assertEqual(values.deviation(300), -94)
+        self.assertEqual(values.variance, 27130)
+        self.assertEqual(values.pop_variance, 21704)
+        self.assertAlmostEqual(values.st_dev, 165, delta=1)
+        self.assertAlmostEqual(values.pop_st_dev, 147, delta=1)
