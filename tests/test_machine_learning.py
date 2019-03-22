@@ -9,7 +9,7 @@ class Test(TestCase):
         # Create data
         geodata = pd.read_csv("tests/data/UScounties.csv")
         votedata = pd.read_csv("tests/data/USvote.csv")
-        merged = geodata.join(votedata)
+        merged = geodata.join(votedata)[:1000]
         data = [{
          "input": [row["Longitude"], row["Latitude"]],
          "output": "GOP" if row["dem_2016"] < row["gop_2016"] else "DEM"
