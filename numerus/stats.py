@@ -96,3 +96,17 @@ class Variable:
     @property
     def pop_st_dev(self):
         return self.pop_variance ** 0.5
+
+
+    def zscore(self, value):
+        return (value - self.mean) / self.st_dev
+
+
+    def percentile(self, value):
+        below = len([v for v in self._values if v < value])
+        return int((below / len(self._values)) * 100)
+
+
+    def quartile(self, value):
+        below = len([v for v in self._values if v < value])
+        return min((int((below / len(self._values)) * 4) + 1, 4))

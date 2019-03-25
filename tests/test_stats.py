@@ -33,3 +33,11 @@ class Tests(TestCase):
         self.assertEqual(values.pop_variance, 21704)
         self.assertAlmostEqual(values.st_dev, 165, delta=1)
         self.assertAlmostEqual(values.pop_st_dev, 147, delta=1)
+
+        # Relative standing
+        self.assertAlmostEqual(heights.zscore(170), -2.73, delta=0.01)
+        values = stats.Variable(*[n * 2 for n in range(200)])
+        self.assertEqual(values.percentile(100), 25)
+        self.assertEqual(values.percentile(320), 80)
+        self.assertEqual(values.quartile(90), 1)
+        self.assertEqual(values.quartile(320), 4)
