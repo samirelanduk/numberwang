@@ -1,4 +1,60 @@
 from collections import Counter
+from math import factorial
+from functools import reduce
+import operator
+import itertools
+
+def permutations(n, r=None):
+    """Returns the number of ways of arranging r elements of a set of size n in
+    a given order - the number of permuatations."""
+
+    if r is None: return factorial(n)
+    return factorial(n) / factorial(n - r)
+
+
+def combinations(n, r=None):
+    """Returns the number of ways of combining r elements of a set of size n,
+    where order doesn't matter."""
+
+    r = n if r is None else r
+    return factorial(n) / (factorial(r) * factorial(n - r))
+
+
+def multiplications(*counts):
+    """Returns the product of the integers given - useful for calculating the
+    number of simple events in a multi-stage process."""
+
+    return reduce(operator.mul, counts, 1)
+
+
+def permutate(collection, r=None):
+    """Generates all the permutations of a given iterable, of a given length.
+    It is essentially a wrapper around the built-in ``itertools.permutations``.
+    """
+
+    return itertools.permutations(collection, r=r)
+
+
+def combine(collection, r=None):
+    """Generates all the combinations of a given iterable, of a given length.
+    It is essentially a wrapper around the built-in ``itertools.combinations``.
+    """
+
+    n = len(tuple(collection))
+    r = n if r is None else r
+    for combination in itertools.combinations(collection, r=r):
+        yield frozenset(combination)
+
+
+def multiply(*collections):
+    """Generates all the multiplications of some iterables. For example, passing
+    ``["A", "B"]`` and ``["+", "_"]`` would yield ``("A", "+")``,
+    ``("A", "-")``, ``("B", "+")`` and ``("B", "-")``."""
+
+    for prod in itertools.product(*collections):
+        yield prod
+
+
 
 class Variable:
 
