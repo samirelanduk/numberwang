@@ -88,3 +88,11 @@ class ProbabilityTests(TestCase):
          ("D", "A"), ("D", "B"), ("D", "C"), ("D", "D"), ("D", "E"),
          ("E", "A"), ("E", "B"), ("E", "C"), ("E", "D"), ("E", "E")
         ))
+
+
+    def test_events(self):
+        # Rolling a die
+        var = stats.RandomVariable(1, 2, 3, 4, 5, 6)
+        self.assertEqual(var.sample_space, {1, 2, 3, 4, 5, 6})
+        self.assertEqual(var(1), 1/6)
+        self.assertEqual(var(6), 1/6)

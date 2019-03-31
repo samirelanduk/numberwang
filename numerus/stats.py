@@ -166,3 +166,25 @@ class Variable:
     def quartile(self, value):
         below = len([v for v in self._values if v < value])
         return min((int((below / len(self._values)) * 4) + 1, 4))
+
+
+
+class RandomVariable:
+    """Generates a value from a sample space of possible values, each with an
+    associated probability."""
+
+    def __init__(self, *outcomes):
+        self._mapping = [[outcome, 1 / len(outcomes)] for outcome in outcomes]
+
+
+    def __call__(self, value):
+        for pair in self._mapping:
+            if pair[0] == value: return pair[1]
+        return 0
+
+
+    @property
+    def sample_space(self):
+        """All the possible outcomes."""
+
+        return set(pair[0] for pair in self._mapping)
