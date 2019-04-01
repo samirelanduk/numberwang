@@ -207,7 +207,7 @@ class Event:
 
 
     def mutually_exclusive_with(self, event):
-        return not self._outcomes & event._outcomes
+        return self._outcomes.isdisjoint(event._outcomes)
 
 
     def exhaustive_with(self, event):
@@ -226,3 +226,24 @@ class SampleSpace(Event):
         if len(outcomes) == 1 and callable(outcomes[0]):
             outcomes = set(o for o in self._outcomes if outcomes[0](o))
         return Event(self, *outcomes)
+
+
+
+class RandomVariable:
+
+    def __init__(self, sample_space, probabilities=None):
+        self._sample_space = sample_space
+        self._mapping = probabilities or {}
+        remaining_o = self._sample_space._outcomes - self._mapping.keys()
+        remaining_p = (1 - sum(self._mapping.values())) / len(remaining_o)
+        for o in remaining_o:
+            self._mapping[o] = remaining_p
+
+
+    def __call__(self, outcome):
+        event = outcome if isinstance(outcome, Event)\
+         else Event(self._sample_space, outcome)
+        probability = 0
+        for outcome in event._outcomes:
+            probability += self._mapping.get(outcome, 0)
+        return probability

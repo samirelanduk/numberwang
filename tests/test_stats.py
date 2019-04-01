@@ -130,3 +130,14 @@ class ProbabilityTests(TestCase):
         self.assertTrue(matching.mutually_exclusive_with(seven))
         self.assertTrue(ace.exhaustive_with(not_ace))
         self.assertFalse(matching.exhaustive_with(seven))
+
+        # Random variables
+        fair_die = stats.RandomVariable(die_outcomes)
+        self.assertEqual(fair_die(1), 1 / 6)
+        self.assertEqual(fair_die(7), 0)
+        self.assertEqual(fair_die(roll_5), 1 / 6)
+        self.assertEqual(fair_die(roll_1_or_6), 1 / 3)
+        unfair_die = stats.RandomVariable(die_outcomes, probabilities={4: 0.2})
+        self.assertEqual(unfair_die(1), 0.16)
+        self.assertEqual(unfair_die(roll_5), 0.16)
+        self.assertEqual(unfair_die(roll_1_or_6), 0.32)
