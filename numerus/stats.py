@@ -198,17 +198,25 @@ class Event:
     an outcome is either in an event or it is not."""
 
     def __init__(self, *simple_events, callable=None):
-        self._simple_events = set(simple_events)
-        self._callable = callable
+        self._callable = callable if callable else lambda o: o in simple_events
 
 
     def __contains__(self, outcome):
-        if self._callable:
-            return self._callable(outcome)
-        else:
-            return outcome in self._simple_events
+        return self._callable(outcome)
+
+
+    def __or__(self, event):
+        return Event(
+         callable=lambda o: bool(self._callable(o)) or bool(event._callable(o))
+        )
+
+
+    def __and__(self, event):
+        return Event(
+         callable=lambda o: bool(self._callable(o)) and bool(event._callable(o))
+        )
 
 
     @property
-    def simple_events(self):
-        return set(self._simple_events)
+    def complement(self):
+        return Event(callable=lambda o: not self._callable(o))

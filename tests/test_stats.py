@@ -97,7 +97,14 @@ class ProbabilityTests(TestCase):
         self.assertEqual(var(1), 1/6)
         self.assertEqual(var(6), 1/6)
 
-        event_3_or_5 = stats.Event(3, 5)
-        self.assertEqual(var(event_3_or_5), 1 / 3)
-        event_even = stats.Event(callable=lambda o: o % 2)
+        event_3_or_4 = stats.Event(4, 5)
+        self.assertEqual(var(event_3_or_4), 1 / 3)
+        event_even = stats.Event(callable=lambda o: o % 2 == 0)
         self.assertEqual(var(event_even), 0.5)
+
+        event_3_or_4_or_even = event_3_or_4 | event_even
+        self.assertAlmostEqual(var(event_3_or_4_or_even), 4 / 6, delta=0.000001)
+        event_3_or_4_and_even = event_3_or_4 & event_even
+        self.assertAlmostEqual(var(event_3_or_4_and_even), 1 / 6, delta=0.000001)
+        event_not_3_or_4_or_even = event_3_or_4_or_even.complement
+        self.assertAlmostEqual(var(event_not_3_or_4_or_even), 2 / 6, delta=0.000001)
