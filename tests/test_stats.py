@@ -91,11 +91,13 @@ class ProbabilityTests(TestCase):
 
 
     def test_events(self):
-        # Rolling a die
+        # Rolling a fair die
         var = stats.RandomVariable(1, 2, 3, 4, 5, 6)
         self.assertEqual(var.sample_space, {1, 2, 3, 4, 5, 6})
         self.assertEqual(var(1), 1/6)
         self.assertEqual(var(6), 1/6)
 
-        event = stats.Event(var, {3, 5})
-        self.assertEqual(event.probability, 1 / 3)
+        event_3_or_5 = stats.Event(3, 5)
+        self.assertEqual(var(event_3_or_5), 1 / 3)
+        event_even = stats.Event(callable=lambda o: o % 2)
+        self.assertEqual(var(event_even), 0.5)

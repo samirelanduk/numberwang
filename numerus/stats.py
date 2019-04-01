@@ -177,10 +177,12 @@ class RandomVariable:
         self._mapping = [[outcome, 1 / len(outcomes)] for outcome in outcomes]
 
 
-    def __call__(self, value):
+    def __call__(self, outcome):
+        event = outcome if isinstance(outcome, Event) else Event(outcome)
+        probability = 0
         for pair in self._mapping:
-            if pair[0] == value: return pair[1]
-        return 0
+            if pair[0] in event: probability += pair[1]
+        return probability
 
 
     @property
@@ -192,13 +194,21 @@ class RandomVariable:
 
 
 class Event:
-    """One or more simple events."""
+    """One or more simple events. They are essentially containers of outcomes -
+    an outcome is either in an event or it is not."""
 
-    def __init__(self, random_variable, simple_events):
-        self._random_variable = random_variable
-        self._simple_events = simple_events
+    def __init__(self, *simple_events, callable=None):
+        self._simple_events = set(simple_events)
+        self._callable = callable
+
+
+    def __contains__(self, outcome):
+        if self._callable:
+            return self._callable(outcome)
+        else:
+            return outcome in self._simple_events
 
 
     @property
-    def probability(self):
-        return sum(self._random_variable(x) for x in self._simple_events)
+    def simple_events(self):
+        return set(self._simple_events)
