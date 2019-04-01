@@ -169,54 +169,60 @@ class Variable:
 
 
 
-class RandomVariable:
-    """Generates a value from a sample space of possible values, each with an
-    associated probability."""
-
-    def __init__(self, *outcomes):
-        self._mapping = [[outcome, 1 / len(outcomes)] for outcome in outcomes]
-
-
-    def __call__(self, outcome):
-        event = outcome if isinstance(outcome, Event) else Event(outcome)
-        probability = 0
-        for pair in self._mapping:
-            if pair[0] in event: probability += pair[1]
-        return probability
-
-
-    @property
-    def sample_space(self):
-        """All the possible outcomes."""
-
-        return set(pair[0] for pair in self._mapping)
-
-
-
 class Event:
-    """One or more simple events. They are essentially containers of outcomes -
-    an outcome is either in an event or it is not."""
+    """One or more outcomes."""
 
-    def __init__(self, *simple_events, callable=None):
-        self._callable = callable if callable else lambda o: o in simple_events
+    def __init__(self, sample_space, *outcomes):
+        self._outcomes = set(outcomes)
+        self._sample_space = sample_space
 
 
     def __contains__(self, outcome):
-        return self._callable(outcome)
+        return outcome in self._outcomes
 
 
     def __or__(self, event):
-        return Event(
-         callable=lambda o: bool(self._callable(o)) or bool(event._callable(o))
-        )
+        return Event(self._sample_space, *(self._outcomes | event._outcomes))
 
 
     def __and__(self, event):
-        return Event(
-         callable=lambda o: bool(self._callable(o)) and bool(event._callable(o))
-        )
+        return Event(self._sample_space, *(self._outcomes & event._outcomes))
 
 
     @property
     def complement(self):
-        return Event(callable=lambda o: not self._callable(o))
+        return Event(
+         self._sample_space, *(self._sample_space._outcomes - self._outcomes)
+        )
+
+
+    @property
+    def outcomes(self):
+        return set(self._outcomes)
+
+
+    @property
+    def count(self):
+        return len(self._outcomes)
+
+
+    def mutually_exclusive_with(self, event):
+        return not self._outcomes & event._outcomes
+
+
+    def exhaustive_with(self, event):
+        return self._outcomes | event._outcomes == self._sample_space._outcomes
+
+
+
+class SampleSpace(Event):
+    """The set of possible outcomes of some experiment."""
+
+    def __init__(self, *outcomes):
+        Event.__init__(self, self, *outcomes)
+
+
+    def event(self, *outcomes):
+        if len(outcomes) == 1 and callable(outcomes[0]):
+            outcomes = set(o for o in self._outcomes if outcomes[0](o))
+        return Event(self, *outcomes)

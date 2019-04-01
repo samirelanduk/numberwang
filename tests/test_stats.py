@@ -91,20 +91,42 @@ class ProbabilityTests(TestCase):
 
 
     def test_events(self):
-        # Rolling a fair die
-        var = stats.RandomVariable(1, 2, 3, 4, 5, 6)
-        self.assertEqual(var.sample_space, {1, 2, 3, 4, 5, 6})
-        self.assertEqual(var(1), 1/6)
-        self.assertEqual(var(6), 1/6)
+        # Sample spaces
+        die_outcomes = stats.SampleSpace(1, 2, 3, 4, 5, 6)
+        two_die_outcomes = stats.SampleSpace(*stats.multiply({1, 2, 3, 4, 5, 6}, {1, 2, 3, 4, 5, 6}))
+        card_outcomes = stats.SampleSpace(*stats.multiply(["H", "D", "S", "C"], range(13)))
+        self.assertEqual(die_outcomes.count, 6)
+        self.assertEqual(two_die_outcomes.count, 36)
+        self.assertEqual(card_outcomes.count, 52)
+        self.assertIn(3, die_outcomes)
+        self.assertNotIn(7, die_outcomes)
+        self.assertIn((1, 4), two_die_outcomes)
+        self.assertNotIn((1, 7), two_die_outcomes)
+        self.assertIn(("S", 0), card_outcomes)
+        self.assertNotIn(("W", 7), card_outcomes)
 
-        event_3_or_4 = stats.Event(4, 5)
-        self.assertEqual(var(event_3_or_4), 1 / 3)
-        event_even = stats.Event(callable=lambda o: o % 2 == 0)
-        self.assertEqual(var(event_even), 0.5)
+        # Events
+        roll_5 = die_outcomes.event(5)
+        roll_1_or_6 = die_outcomes.event(1, 6)
+        roll_even = die_outcomes.event(lambda o: o % 2 == 0)
+        self.assertEqual(roll_5.count, 1)
+        self.assertEqual(roll_1_or_6.count, 2)
+        self.assertEqual(roll_even.count, 3)
+        matching = two_die_outcomes.event(lambda o: o[0] == o[1])
+        self.assertEqual(matching.count, 6)
+        seven = two_die_outcomes.event(lambda o: o[0] + o[1] == 7)
+        self.assertEqual(seven.count, 6)
+        ace = card_outcomes.event(lambda o: o[1] == 0)
+        self.assertEqual(ace.count, 4)
 
-        event_3_or_4_or_even = event_3_or_4 | event_even
-        self.assertAlmostEqual(var(event_3_or_4_or_even), 4 / 6, delta=0.000001)
-        event_3_or_4_and_even = event_3_or_4 & event_even
-        self.assertAlmostEqual(var(event_3_or_4_and_even), 1 / 6, delta=0.000001)
-        event_not_3_or_4_or_even = event_3_or_4_or_even.complement
-        self.assertAlmostEqual(var(event_not_3_or_4_or_even), 2 / 6, delta=0.000001)
+        # Event combinations
+        roll_5_or_1_or_6 = roll_5 | roll_1_or_6
+        self.assertEqual(roll_5_or_1_or_6.outcomes, {1, 5, 6})
+        roll_even_and_1_or_6 = roll_even & roll_1_or_6
+        self.assertEqual(roll_even_and_1_or_6.outcomes, {6})
+        not_ace = ace.complement
+        self.assertEqual(not_ace.count, 48)
+        self.assertFalse(roll_even.mutually_exclusive_with(roll_1_or_6))
+        self.assertTrue(matching.mutually_exclusive_with(seven))
+        self.assertTrue(ace.exhaustive_with(not_ace))
+        self.assertFalse(matching.exhaustive_with(seven))
