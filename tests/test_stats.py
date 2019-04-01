@@ -96,3 +96,6 @@ class ProbabilityTests(TestCase):
         self.assertEqual(var.sample_space, {1, 2, 3, 4, 5, 6})
         self.assertEqual(var(1), 1/6)
         self.assertEqual(var(6), 1/6)
+
+        event = stats.Event(var, {3, 5})
+        self.assertEqual(event.probability, 1 / 3)

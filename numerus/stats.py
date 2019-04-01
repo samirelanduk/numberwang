@@ -188,3 +188,17 @@ class RandomVariable:
         """All the possible outcomes."""
 
         return set(pair[0] for pair in self._mapping)
+
+
+
+class Event:
+    """One or more simple events."""
+
+    def __init__(self, random_variable, simple_events):
+        self._random_variable = random_variable
+        self._simple_events = simple_events
+
+
+    @property
+    def probability(self):
+        return sum(self._random_variable(x) for x in self._simple_events)
