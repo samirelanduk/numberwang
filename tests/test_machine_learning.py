@@ -5,7 +5,7 @@ import numerus.learning as learning
 
 class Test(TestCase):
 
-    def test(self):
+    def test_knn(self):
         # Create data
         geodata = pd.read_csv("tests/data/UScounties.csv")
         votedata = pd.read_csv("tests/data/USvote.csv")
@@ -28,5 +28,27 @@ class Test(TestCase):
         # Test model
         model.test(test_data)
         self.assertGreater(model.accuracy, 0.9)
-        self.assertGreater(model.sensitivity("DEM"), 0.75)
+        self.assertGreater(model.sensitivity("DEM"), 0.74)
         self.assertGreater(model.specificity("DEM"), 0.9)
+
+
+    def test_perceptron(self):
+        # Create data
+        irisdata = pd.read_csv("tests/data/iris.csv")
+        data = [{
+         "input": [row["Sepal length"], row["Petal length"]],
+         "output": 1 if row["Class"] == "Iris-versicolor" else -1
+        } for i, row in irisdata.iterrows() if row["Class"] != "Iris-virginica"]
+
+        # Create training and testing data
+        training_data, test_data = learning.divide_data(data)
+
+        # Train model
+        model = learning.Perceptron()
+        model.train(training_data)
+
+        # Test model
+        model.test(test_data)
+        self.assertEqual(model.accuracy, 1)
+        self.assertEqual(model.sensitivity(1), 1)
+        self.assertEqual(model.specificity(1), 1)
