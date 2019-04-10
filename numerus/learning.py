@@ -89,26 +89,31 @@ class KNearestNeighbour(Model):
 
 class Perceptron(Model):
 
-    def __init__(self):
-        self.learning_rate = 0.1
-        self.epochs = 50
+    def __init__(self, learning_rate=0.01, epochs=50):
+        self.learning_rate = learning_rate
+        self.epochs = epochs
+        self.threshold = 0
 
 
     def __call__(self, input):
-        # Add 1 to the beginning to account for the threshold input.
-        input = np.array([1] + input)
-
-        # What is the combined effect of all the inputs?
-        z = input.dot(self.weights)
+        # What is the combined effect of all the input features?
+        z = self.process_input(input)
 
         # Is this enough to fire?
-        return 1 if z > 0 else -1
+        return 1 if z > self.threshold else -1
+
+
+    def process_input(self, input):
+        """Takes an input vector and determines the net outcome based on the
+        perceptron's weights."""
+
+        return input.dot(self.weights)
 
 
     def train(self, training_data):
         # Create weight vector of the appropriate number of dimensions
         dimension_count = len(training_data[0]["input"])
-        self.weights = np.array([0.5 for _ in range(dimension_count + 1)])
+        self.weights = np.array([0.5 for _ in range(dimension_count)])
 
         # Pass through the training data a predetermined number of times, and
         # track how long it takes to converge
@@ -120,7 +125,7 @@ class Perceptron(Model):
             # Go through every object in the training data
             for input in training_data:
                 # Get the actual input vector
-                input_vector = input["input"][:]
+                input_vector = np.array(input["input"][:])
 
                 # What does the perceptron currently map this input to?
                 predicted_output = self(input_vector)
@@ -132,14 +137,68 @@ class Perceptron(Model):
                 errors += int(correct_output != predicted_output)
 
                 # Update the weights vector
-                input_vector.insert(0, 1)
+                input_vector = np.insert(input_vector, 0, 1)
                 delta = self.learning_rate * (correct_output - predicted_output)
-                self.weights[0] += delta
-                for dimension in range(1, len(self.weights)):
+                self.threshold += delta
+                for dimension in range(len(self.weights)):
                     self.weights[dimension] += (input_vector[dimension] * delta)
 
             # Update convergence data
             self.convergence.append((n, errors))
+
+        # The model has now been trained
+        self.trained = True
+
+
+
+class Adaline(Perceptron):
+
+    def __call__(self, input):
+        # What is the combined effect of all the inputs?
+        z = self.process_input(input)
+
+        # Activate the net input
+        activated_z = self.activate(z)
+
+        # Is this enough to fire?
+        return 1 if z > self.threshold else -1
+
+
+    def activate(self, z):
+        return z
+
+
+    def train(self, training_data):
+        # Create weight vector of the appropriate number of dimensions
+        dimension_count = len(training_data[0]["input"])
+        self.weights = np.array([0.5 for _ in range(dimension_count)])
+
+        # Get the inputs as a matrix
+        inputs = np.array([input["input"] for input in training_data])
+
+        # Get the correct outputs as a vector
+        correct_outputs = np.array([input["output"] for input in training_data])
+
+        # Pass through the training data a predetermined number of times, and
+        # track how long it takes to converge
+        self.convergence = []
+        for n in range(self.epochs):
+
+            # What are the neuron activations for all the inputs
+            activations = self.process_input(inputs)
+
+            # What is the sum of squared error of this performance?
+            errors = correct_outputs - activations
+            sum_error_squared = (errors ** 2).sum() / 2
+
+            # What should the new threshold be?
+            self.threshold += self.learning_rate * errors.sum()
+
+            # What should the new weights be?
+            self.weights += self.learning_rate * inputs.T.dot(errors)
+
+            # Update convergence
+            self.convergence.append((n, sum_error_squared))
 
         # The model has now been trained
         self.trained = True
