@@ -89,7 +89,7 @@ class KNearestNeighbour(Model):
 
 class Perceptron(Model):
 
-    def __init__(self, learning_rate=0.01, epochs=50):
+    def __init__(self, learning_rate=0.01, epochs=100):
         self.learning_rate = learning_rate
         self.epochs = epochs
         self.threshold = 0
@@ -202,3 +202,54 @@ class Adaline(Perceptron):
 
         # The model has now been trained
         self.trained = True
+
+
+
+class StochasticAdaline(Adaline):
+
+    def train(self, training_data):
+        # Create weight vector of the appropriate number of dimensions
+        dimension_count = len(training_data[0]["input"])
+        self.weights = np.array([0.5 for _ in range(dimension_count)])
+
+        # The model has now been trained
+        self.trained = True
+
+        # Get the inputs as a matrix
+        inputs = np.array([input["input"] for input in training_data])
+
+        # Get the correct outputs as a vector
+        correct_outputs = np.array([input["output"] for input in training_data])
+
+        # Pass through the training data a predetermined number of times, and
+        # track how long it takes to converge
+        self.convergence = []
+        for n in range(self.epochs):
+            # Get a shuffled copy of the inputs
+            matrix_indices = np.random.RandomState().permutation(len(inputs))
+            shuffled_inputs = inputs[matrix_indices]
+
+            # Shuffle the outputs so that they match the shuffled inputs
+            shuffled_correct_outputs = correct_outputs[matrix_indices]
+
+            # Go through every input and its output
+            costs = []
+            for input, correct_output in zip(shuffled_inputs,  shuffled_correct_outputs):
+                # What is the activation for this output?
+                activation = self.activate(self.process_input(input))
+
+                # How far off is this?
+                error = correct_output - activation
+
+                # Update the threshold
+                self.threshold += self.learning_rate * error
+
+                # Update the weights
+                self.weights += self.learning_rate * input.dot(error)
+
+                # How far off was the neuron?
+                costs.append(0.5 * error ** 2)
+
+            # How did the neuron perform over all inputs?
+            average_cost = sum(costs) / len(costs)
+            self.convergence.append((n, average_cost))
