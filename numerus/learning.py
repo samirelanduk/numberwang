@@ -1,10 +1,24 @@
 import random
 import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.colors import ListedColormap
 from collections import Counter
 
+def display_dataset(dataframe, title="", show=True):
+    column_names = dataframe.columns
+    for label in np.unique(dataframe[column_names[2]]):
+        df = dataframe[dataframe[column_names[2]] == label]
+        plt.scatter(df[column_names[0]], df[column_names[1]], label=label)
+    plt.xlabel(column_names[0])
+    plt.ylabel(column_names[1])
+    plt.title(title)
+    plt.legend()
+    if show:
+        plt.show()
+
+
 def divide_data(data, test=0.2):
-    data = data[:]
-    random.shuffle(data)
+    data = data.sample(frac=1)
     test_cutoff = int(test * len(data))
     return data[:-test_cutoff], data[test_cutoff:]
 
@@ -16,10 +30,37 @@ class Model:
     some way, maps the input to a predicted category (in the case of
     classification) or value (in the case of regression)."""
 
-    def __init__(self):
+    def __init__(self, training_data):
+        self.training_data = training_data
+        self.training_inputs = training_data.iloc[:, 0:2].values
+        self.training_outputs = training_data.iloc[:, 2:3].values
         self.trained = False
-        self.training_data = []
+        self.dimensions = len(self.training_inputs[0])
         self.test_data = []
+
+
+    def __call__(self, input):
+        return np.array([np.random.choice([-1, 1]) for _ in input])
+
+
+    def display(self):
+
+        x1_min = self.training_inputs[:, 0].min() - 1
+        x1_max = self.training_inputs[:, 0].max() + 1
+        x2_min = self.training_inputs[:, 1].min() - 1
+        x2_max = self.training_inputs[:, 1].max() + 1
+        colors = ('red', 'blue', 'lightgreen', 'gray', 'cyan')
+        cmap = ListedColormap(colors[:len(np.unique(self.training_outputs))])
+        xx1, xx2 = np.meshgrid(
+         np.arange(x1_min, x1_max, 0.02), np.arange(x2_min, x2_max, 0.02)
+        )
+        Z = self(np.array([xx1.ravel(), xx2.ravel()]).T)
+        Z = Z.reshape(xx1.shape)
+        plt.contourf(xx1, xx2, Z, alpha=0.3, cmap=cmap)
+        display_dataset(self.training_data)
+        plt.show()
+
+
 
 
     def test(self, data):
@@ -89,10 +130,16 @@ class KNearestNeighbour(Model):
 
 class Perceptron(Model):
 
-    def __init__(self, learning_rate=0.01, epochs=100):
+    '''def __init__(self, *args, learning_rate=0.01, epochs=100, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.weights = np.array([0.5 for _ in range(self.dimensions)])
         self.learning_rate = learning_rate
         self.epochs = epochs
         self.threshold = 0
+
+
+    def __repr__(self):
+        return f"<Perceptron ({self.dimensions} dimensions, {'' if self.trained else 'un'}trained, learning_rate={self.learning_rate}, epochs={self.epochs}, weights={self.weights}, threshold={self.threshold})>"
 
 
     def __call__(self, input):
@@ -252,4 +299,4 @@ class StochasticAdaline(Adaline):
 
             # How did the neuron perform over all inputs?
             average_cost = sum(costs) / len(costs)
-            self.convergence.append((n, average_cost))
+            self.convergence.append((n, average_cost))'''
